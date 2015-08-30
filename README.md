@@ -1,6 +1,6 @@
 # cross-chromium 
 
-To checkout, instead of just clonin issue the following:
+To checkout instead of just cloning, prefer the following:
 
     mkdir cross-chromium
     cd cross-chromium
