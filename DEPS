@@ -21,6 +21,3 @@ hooks = [
     'action': ['python', 'src/chromium/build/gyp_chromium'],
   },
 ]
-
-
-
