@@ -1,0 +1,6 @@
+{
+  'GYP_DEFINES': 'target_arch=arm component=shared_library linux_use_gold_flags=1',
+  'GYP_CROSSCOMPILE': 'True',
+  'CC': 'arm-linux-gnueabihf-gcc',
+  'CXX': 'arm-linux-gnueabihf-g++'
+}
