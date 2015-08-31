@@ -11,6 +11,9 @@ deps = {
 
   'src/chromium/tools/gyp':
     Var('tarc_git') + '/gyp.git' + '@' + 'master',
+
+  'src/chromium/third_party/icu':
+   Var('chromium_git') + '/chromium/deps/icu52.git' + '@' + '8ac906faf7b66180f2208380c35ae1e07136c5cc', # from svn revision 292317
 }
 
 hooks = [
