@@ -3,6 +3,7 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
   'tarc_git' : 'https://github.com/tarc',
+  'swarming_revision': 'c28b74ff7a2678b611f4a7ecb3be4f99f15a76fd',
   'v8_revision': 'd766d7d1a1bf33a4b70d194029a8de817135f4ff', # from svn revision 24578
 }
 
@@ -21,6 +22,12 @@ deps = {
 
   'src/chromium/v8':
     Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
+
+  'src/chromium/testing/gtest':
+   Var('chromium_git') + '/external/googletest.git' + '@' + '9855a87157778d39b95eccfb201a9dc90f6d61c6', # from svn revision 746
+
+  'src/chromium/tools/swarming_client':
+   Var('chromium_git') + '/external/swarming.client.git' + '@' +  Var('swarming_revision'),
 
 }
 
