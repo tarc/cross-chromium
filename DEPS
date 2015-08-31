@@ -3,6 +3,7 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
   'tarc_git' : 'https://github.com/tarc',
+  'v8_revision': '738e9567a03bc7530d46a8e5025b7f271003fae9',
 }
 
 deps = {
@@ -17,6 +18,9 @@ deps = {
 
   'src/chromium/tools/grit':
     Var('chromium_git') + '/external/grit-i18n.git' + '@' + '15d48e32cc9f346245c823ce48c54209d02ea983', # from svn revision 196
+
+  'src/chromium/v8':
+    Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
 
 }
 
