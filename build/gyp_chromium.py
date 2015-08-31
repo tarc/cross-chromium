@@ -9,23 +9,28 @@ is invoked by Chromium beyond what can be done in the gclient hooks.
 import argparse
 import gc
 import glob
-import gyp_environment
 import os
 import re
 import shlex
 import subprocess
 import string
 import sys
-import vs_toolchain
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 chrome_src = os.path.abspath(os.path.join(script_dir, os.pardir))
+
+chrome_src = os.path.join ( chrome_src , 'chromium' )
+script_dir = os.path.join ( chrome_src , 'build' )
 
 sys.path.insert(0, os.path.join(chrome_src, 'tools', 'gyp', 'pylib'))
 import gyp
 
 # Assume this file is in a one-level-deep subdirectory of the source root.
 SRC_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+sys.path.insert(1, os.path.join(chrome_src, 'build'))
+import gyp_environment
+import vs_toolchain
 
 # Add paths so that pymod_do_main(...) can import files.
 sys.path.insert(1, os.path.join(chrome_src, 'android_webview', 'tools'))
@@ -313,6 +318,8 @@ def main():
       ['-I' + i for i in additional_include_files(supplemental_includes, args)])
 
   args.extend(['-D', 'gyp_output_dir=' + GetOutputDirectory()])
+#  args.extend(['--debug', 'includes'])
+  args.extend(['--depth', chrome_src])
 
   if not use_analyzer:
     print 'Updating projects from gyp files...'
