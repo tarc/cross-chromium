@@ -14,6 +14,10 @@ deps = {
 
   'src/chromium/third_party/icu':
     Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '6b3ce817f8e828c3b7a577d2395f0882eb56ef18',
+
+  'src/chromium/tools/grit':
+    Var('chromium_git') + '/external/grit-i18n.git' + '@' + '15d48e32cc9f346245c823ce48c54209d02ea983', # from svn revision 196
+
 }
 
 hooks = [
