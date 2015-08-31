@@ -22,6 +22,8 @@ deps = {
   'src/chromium/v8':
     Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
 
+  'src/chromium/testing/gtest':
+   Var('chromium_git') + '/external/googletest.git' + '@' + '9855a87157778d39b95eccfb201a9dc90f6d61c6', # from svn revision 746
 }
 
 hooks = [
