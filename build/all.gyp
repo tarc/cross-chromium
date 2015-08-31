@@ -15,8 +15,9 @@
       'xcode_create_dependents_test_runner': 1,
       'dependencies': [
         '<@(app_targets)',
-#        '<(DEPTH)/build/some.gyp:*',
+        '<(DEPTH)/build/some.gyp:*',
         '<(DEPTH)/base/base.gyp:*',
+#        '<(DEPTH)/components/components.gyp:*',
 #				'../third_party/WebKit/public/blink.gyp:blink_minimal'
         ]
     }

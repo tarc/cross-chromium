@@ -15,19 +15,23 @@ deps = {
     Var('tarc_git') + '/gyp.git' + '@' + 'master',
 
   'src/chromium/third_party/icu':
-    Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '6b3ce817f8e828c3b7a577d2395f0882eb56ef18',
+    Var('chromium_git') + '/chromium/deps/icu.git' + '@' +
+      '6b3ce817f8e828c3b7a577d2395f0882eb56ef18',
 
   'src/chromium/tools/grit':
-    Var('chromium_git') + '/external/grit-i18n.git' + '@' + '15d48e32cc9f346245c823ce48c54209d02ea983', # from svn revision 196
+    Var('chromium_git') + '/external/grit-i18n.git' + '@' +
+      '15d48e32cc9f346245c823ce48c54209d02ea983', # from svn revision 196
 
   'src/chromium/v8':
     Var('chromium_git') + '/v8/v8.git' + '@' +  Var('v8_revision'),
 
   'src/chromium/testing/gtest':
-   Var('chromium_git') + '/external/googletest.git' + '@' + '9855a87157778d39b95eccfb201a9dc90f6d61c6', # from svn revision 746
+    Var('chromium_git') + '/external/googletest.git' + '@' +
+      '9855a87157778d39b95eccfb201a9dc90f6d61c6', # from svn revision 746
 
   'src/chromium/tools/swarming_client':
-   Var('chromium_git') + '/external/swarming.client.git' + '@' +  Var('swarming_revision'),
+    Var('chromium_git') + '/external/swarming.client.git' + '@' +
+      Var('swarming_revision'),
 
 }
 
