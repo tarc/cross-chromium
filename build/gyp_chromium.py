@@ -16,11 +16,11 @@ import subprocess
 import string
 import sys
 
-script_dir = os.path.dirname(os.path.realpath(__file__))
+script_dir = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
 chrome_src = os.path.abspath(os.path.join(script_dir, os.pardir))
 
 chrome_src = os.path.join ( chrome_src , 'chromium' )
-script_dir = os.path.join ( chrome_src , 'build' )
+chrome_script_dir = os.path.join ( chrome_src , 'build' )
 
 sys.path.insert(0, os.path.join(chrome_src, 'tools', 'gyp', 'pylib'))
 import gyp
