@@ -260,7 +260,7 @@
           }],
 
           # Set default gomadir.
-          ['OS=="win"', {
+          ['HOST_OS=="win"', {
             'gomadir': 'c:\\goma\\goma-win',
           }, {
             'gomadir': '<!(/bin/echo -n ${HOME}/goma)',
@@ -288,24 +288,32 @@
           }],
 
           ['OS=="linux" and target_arch=="arm" and chromeos==0', {
-            # sysroot needs to be an absolute path otherwise it generates
-            # incorrect results when passed to pkg-config
-            'sysroot%': '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_wheezy_arm-sysroot',
+            'conditions': [
+              ['HOST_OS=="win"', {
+                'sysroot%': '<(SYSROOT)'
+              }, {
+
+                # sysroot needs to be an absolute path otherwise it generates
+                # incorrect results when passed to pkg-config
+                'sysroot%':
+                '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_wheezy_arm-sysroot',
+              }],
+            ],
           }], # OS=="linux" and target_arch=="arm" and chromeos==0
 
           ['OS=="linux" and ((branding=="Chrome" and buildtype=="Official" and chromeos==0) or use_sysroot==1)' , {
             'conditions': [
               ['target_arch=="x64"', {
-                'sysroot%': '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_wheezy_amd64-sysroot',
+                'sysroot%': '<!(cd <(DEPTH) && pwd -P coco2)/build/linux/debian_wheezy_amd64-sysroot',
               }],
               ['target_arch=="ia32"', {
-                'sysroot%': '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_wheezy_i386-sysroot',
+                'sysroot%': '<!(cd <(DEPTH) && pwd -P coco3)/build/linux/debian_wheezy_i386-sysroot',
               }],
           ],
           }], # OS=="linux" and branding=="Chrome" and buildtype=="Official" and chromeos==0
 
           ['OS=="linux" and target_arch=="mipsel"', {
-            'sysroot%': '<!(cd <(DEPTH) && pwd -P)/build/linux/debian_wheezy_mips-sysroot',
+            'sysroot%': '<!(cd <(DEPTH) && pwd -P coco4)/build/linux/debian_wheezy_mips-sysroot',
           }],
         ],
       },
@@ -1715,11 +1723,11 @@
             # Unfortunately, it is required to use the absolute path to the SDK
             # because it us passed to ant which uses a different relative path
             # from GYP.
-            'android_sdk_root%': '<!(cd <(DEPTH) && pwd -P)/third_party/android_tools/sdk/',
+            'android_sdk_root%': '<!(cd <(DEPTH) && pwd -P coco7)/third_party/android_tools/sdk/',
             # Similarly, gdbserver and the Android toolchain need to use the
             # absolute path to the NDK because they are used at different levels
             # in the GYP files.
-            'android_ndk_absolute_root%': '<!(cd <(DEPTH) && pwd -P)/third_party/android_tools/ndk/',
+            'android_ndk_absolute_root%': '<!(cd <(DEPTH) && pwd -P coco8)/third_party/android_tools/ndk/',
             'android_host_arch%': '<!(uname -m)',
             # Android API-level of the SDK used for compilation.
             'android_sdk_version%': '23',
@@ -2218,9 +2226,9 @@
               'variables': {
                 'conditions': [
                   ['OS=="mac" or OS=="ios"', {
-                    'clang_lib_path%': '<!(cd <(DEPTH) && pwd -P)/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.dylib',
+                    'clang_lib_path%': '<!(cd <(DEPTH) && pwd -P coco9)/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.dylib',
                   }, { # OS != "mac" or OS != "ios"
-                    'clang_lib_path%': '<!(cd <(DEPTH) && pwd -P)/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so',
+                    'clang_lib_path%': '<!(cd <(DEPTH) && pwd -P coco10)/third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so',
                   }],
                 ],
               },
@@ -2649,7 +2657,7 @@
         '-Wno-shift-negative-value',
       ],
     },
-    'includes': [ 'set_clang_warning_flags.gypi', ],
+    'includes': [ '../chromium/build/set_clang_warning_flags.gypi', ],
     'defines': [
       # Don't use deprecated V8 APIs anywhere.
       'V8_DEPRECATION_WARNINGS',
@@ -3251,7 +3259,7 @@
       }, {
         'includes': [
            # Rules for excluding e.g. foo_win.cc from the build on non-Windows.
-          'filename_rules.gypi',
+          '../chromium/build/filename_rules.gypi',
         ],
         # In Chromium code, we define __STDC_foo_MACROS in order to get the
         # C99 macros on Mac and Linux.
@@ -3570,7 +3578,7 @@
         },
         'conditions': [
           ['msvs_use_common_release', {
-            'includes': ['release.gypi'],
+            'includes': ['../chromium/build/release.gypi'],
           }],
           ['release_valgrind_build==0 and tsan==0', {
             'defines': [
@@ -4336,7 +4344,7 @@
                 ],
                 'ldflags': [
                   '--sysroot=<(sysroot)',
-                  '<!(<(DEPTH)/build/linux/sysroot_ld_path.sh <(sysroot))',
+#                  '-L/home/tarcisio/projects/chromium-master/src/build/linux/debian_wheezy_arm-sysroot/lib/arm-linux-gnueabihf -Wl,-rpath-link=/home/tarcisio/projects/chromium-master/src/build/linux/debian_wheezy_arm-sysroot/lib/arm-linux-gnueabihf -L/home/tarcisio/projects/chromium-master/src/build/linux/debian_wheezy_arm-sysroot/usr/lib/arm-linux-gnueabihf -Wl,-rpath-link=/home/tarcisio/projects/chromium-master/src/build/linux/debian_wheezy_arm-sysroot/usr/lib/arm-linux-gnueabihf',
                 ],
               }]]
           }],
@@ -4699,7 +4707,7 @@
           }],
           ['linux_use_bundled_binutils==1', {
             'cflags': [
-              '-B<!(cd <(DEPTH) && pwd -P)/<(binutils_dir)',
+              '-B<!(cd <(DEPTH) && pwd -P coco11)/<(binutils_dir)',
             ],
           }],
           ['linux_use_bundled_gold==1 and '
@@ -4713,7 +4721,7 @@
             # path at link time to find "as", and our bundled "as" can only
             # target x86.
             'ldflags': [
-              '-B<!(cd <(DEPTH) && pwd -P)/<(binutils_dir)',
+#              '-B<!(cd <(DEPTH) && pwd -P coco12)/<(binutils_dir)',
             ],
           }],
           # Some binutils 2.23 releases may or may not have new dtags enabled,
@@ -4907,7 +4915,7 @@
                     # Use a linker version script to strip JNI exports from
                     # binaries which have not specifically asked to use them.
                     'ldflags': [
-                      '-Wl,--version-script=<!(cd <(DEPTH) && pwd -P)/build/android/android_no_jni_exports.lst',
+                      '-Wl,--version-script=<!(cd <(DEPTH) && pwd -P coco13)/build/android/android_no_jni_exports.lst',
                     ],
                   }],
                 ],
@@ -5414,7 +5422,7 @@
     }],  # OS=="mac"
     ['OS=="ios"', {
       'includes': [
-        'ios/coverage.gypi',
+        '../chromium/build/ios/coverage.gypi',
       ],
       'target_defaults': {
         'xcode_settings' : {
@@ -6044,8 +6052,8 @@
       # Set default ARM cross tools on linux.  These can be overridden
       # using CC,CXX,CC.host and CXX.host environment variables.
       'make_global_settings': [
-        ['CC', '<!(which arm-linux-gnueabihf-gcc)'],
-        ['CXX', '<!(which arm-linux-gnueabihf-g++)'],
+        ['CC', '<!(where arm-linux-gnueabihf-gcc 2>NUL || echo chumbrega)'],
+        ['CXX', '<!(where arm-linux-gnueabihf-g++ 2>NUL || echo chumbrega)'],
         ['CC.host', '<(host_cc)'],
         ['CXX.host', '<(host_cxx)'],
       ],
