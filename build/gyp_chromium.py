@@ -320,6 +320,7 @@ def main():
   args.extend(['-D', 'gyp_output_dir=' + GetOutputDirectory()])
 #  args.extend(['--debug', 'includes'])
   args.extend(['--depth', chrome_src])
+  args.extend(['--no-parallel'])
 
   if not use_analyzer:
     print 'Updating projects from gyp files...'

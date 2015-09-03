@@ -1053,7 +1053,8 @@
         }],
 
         ['sysroot!=""', {
-          'pkg-config': '<(chroot_cmd) <(DEPTH)/build/linux/pkg-config-wrapper "<(sysroot)" "<(target_arch)" "<(system_libdir)"',
+          #'pkg-config': '<(chroot_cmd) <(DEPTH)/build/linux/pkg-config-wrapper "<(sysroot)" "<(target_arch)" "<(system_libdir)"',
+          'pkg-config': 'pkg-config',
         }, {
           'pkg-config': 'pkg-config'
         }],
@@ -3209,7 +3210,7 @@
               # This is off by default in some gccs but on by default in others.
               # BSD systems do not support this option, since they are usually
               # using gcc 4.2.1, which does not have this flag yet.
-              '-Wno-unused-result',
+              #'-Wno-unused-result',
             ],
           }],
           [ 'OS=="win"', {
@@ -3769,7 +3770,7 @@
         ],
         'cflags_cc': [
           '-fno-exceptions',
-          '-fno-rtti',
+          #'-fno-rtti',
           '-fno-threadsafe-statics',
           # Make inline functions have hidden visiblity by default.
           # Surprisingly, not covered by -fvisibility=hidden.
@@ -6065,8 +6066,8 @@
       # Set default ARM cross tools on linux.  These can be overridden
       # using CC,CXX,CC.host and CXX.host environment variables.
       'make_global_settings': [
-        ['CC', '<!(<(which) arm-linux-gnueabihf-gcc 2><(nullfile))'],
-        ['CXX', '<!(<(which) arm-linux-gnueabihf-g++ 2><(nullfile))'],
+        ['CC', '<!(<(which) arm-linux-gnueabihf-gcc 2><(nullfile) || true)'],
+        ['CXX', '<!(<(which) arm-linux-gnueabihf-g++ 2><(nullfile) || true)'],
         ['CC.host', '<(host_cc)'],
         ['CXX.host', '<(host_cxx)'],
       ],
