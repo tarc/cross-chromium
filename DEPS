@@ -2,6 +2,7 @@
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
+  'chromium_rev': 'master', #'b614f6981808ab7a8ae18795dfcb58f1e6eed8aa', #'d2d9fe0f',
   'tarc_git' : 'https://github.com/tarc',
   'swarming_revision': '2866a22530cb65feae5d9f64c83636aed5391d06',
   'v8_revision': '738e9567a03bc7530d46a8e5025b7f271003fae9',
@@ -9,7 +10,7 @@ vars = {
 
 deps = {
   'src/chromium/':
-    Var('chromium_git') + '/chromium/src' + '@' + 'master',
+    Var('chromium_git') + '/chromium/src' + '@' + Var('chromium_rev'),
 
   'src/chromium/tools/gyp':
     Var('tarc_git') + '/gyp.git' + '@' + 'master',
