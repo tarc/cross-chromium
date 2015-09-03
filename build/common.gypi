@@ -287,10 +287,18 @@
             'mips_arch_variant%': 'r1',
           }],
 
+          ['HOST_OS=="win"', {
+            'nullfile%': 'NUL',
+            'which%': 'where',
+          }, {
+            'nullfile%': '/dev/null',
+            'which%': 'which',
+          }],
+
           ['OS=="linux" and target_arch=="arm" and chromeos==0', {
             'conditions': [
               ['HOST_OS=="win"', {
-                'sysroot%': '<(SYSROOT)'
+                'sysroot%': '<(SYSROOT)',
               }, {
 
                 # sysroot needs to be an absolute path otherwise it generates
@@ -351,6 +359,8 @@
       'branding_path_component%': '<(branding_path_component)',
       'arm_version%': '<(arm_version)',
       'sysroot%': '<(sysroot)',
+      'nullfile%': '<(nullfile)',
+      'which%': '<(which)',
       'chroot_cmd%': '<(chroot_cmd)',
       'system_libdir%': '<(system_libdir)',
 
@@ -1171,6 +1181,8 @@
     'arm_neon%': '<(arm_neon)',
     'arm_neon_optional%': '<(arm_neon_optional)',
     'sysroot%': '<(sysroot)',
+    'nullfile%': '<(nullfile)',
+    'which%': '<(which)',
     'pkg-config%': '<(pkg-config)',
     'chroot_cmd%': '<(chroot_cmd)',
     'system_libdir%': '<(system_libdir)',
@@ -2656,6 +2668,7 @@
         # TODO(thakis): Enable this, crbug.com/507717
         '-Wno-shift-negative-value',
       ],
+
     },
     'includes': [ '../chromium/build/set_clang_warning_flags.gypi', ],
     'defines': [
@@ -6052,8 +6065,8 @@
       # Set default ARM cross tools on linux.  These can be overridden
       # using CC,CXX,CC.host and CXX.host environment variables.
       'make_global_settings': [
-        ['CC', '<!(where arm-linux-gnueabihf-gcc 2>NUL || echo chumbrega)'],
-        ['CXX', '<!(where arm-linux-gnueabihf-g++ 2>NUL || echo chumbrega)'],
+        ['CC', '<!(<(which) arm-linux-gnueabihf-gcc 2><(nullfile))'],
+        ['CXX', '<!(<(which) arm-linux-gnueabihf-g++ 2><(nullfile))'],
         ['CC.host', '<(host_cc)'],
         ['CXX.host', '<(host_cxx)'],
       ],
