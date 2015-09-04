@@ -30,6 +30,10 @@ deps = {
     Var('chromium_git') + '/external/googletest.git' + '@' +
       '9855a87157778d39b95eccfb201a9dc90f6d61c6', # from svn revision 746
 
+  'src/chromium/testing/gmock':
+    Var('chromium_git') + '/external/googlemock.git' + '@' +
+      '0421b6f358139f02e102c9c332ce19a33faf75be', # from svn revision 566
+
   'src/chromium/tools/swarming_client':
     Var('chromium_git') + '/external/swarming.client.git' + '@' +
       Var('swarming_revision'),
