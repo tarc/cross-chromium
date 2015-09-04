@@ -297,7 +297,7 @@
 
           ['OS=="linux" and target_arch=="arm" and chromeos==0', {
             'conditions': [
-              ['HOST_OS=="win"', {
+              ['SYSROOT!=""', {
                 'sysroot%': '<(SYSROOT)',
               }, {
 
