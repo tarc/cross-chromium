@@ -2983,7 +2983,7 @@
               # This is off by default in some gccs but on by default in others.
               # BSD systems do not support this option, since they are usually
               # using gcc 4.2.1, which does not have this flag yet.
-              '-Wno-unused-result',
+              #'-Wno-unused-result',
             ],
           }],
           [ 'OS=="win"', {
@@ -3523,7 +3523,7 @@
             'cflags': [
               '-O>(debug_optimize)',
               '-g',
-              '-gdwarf-4',
+              #'-gdwarf-4',
             ],
             'conditions' : [
               ['OS=="android"', {
