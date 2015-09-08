@@ -908,7 +908,7 @@
           # Set some defaults for arm/linux chrome builds
           'use_allocator%': 'none',
           'conditions': [
-            ['HOST_OS=="win"', {
+            ['SYSROOT!=""', {
               'sysroot%': '<(SYSROOT)'
             }, {
 
