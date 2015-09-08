@@ -262,6 +262,15 @@
           ['target_arch=="mipsel"', {
             'mips_arch_variant%': 'r1',
           }],
+
+          ['HOST_OS=="win"', {
+            'nullfile%': 'NUL',
+            'which%': 'where',
+          }, {
+            'nullfile%': '/dev/null',
+            'which%': 'which',
+          }],
+
         ],
       },
 
@@ -295,6 +304,8 @@
       'branding%': '<(branding)',
       'arm_version%': '<(arm_version)',
       'sysroot%': '<(sysroot)',
+      'nullfile%': '<(nullfile)',
+      'which%': '<(which)',
       'chroot_cmd%': '<(chroot_cmd)',
       'system_libdir%': '<(system_libdir)',
 
@@ -1094,6 +1105,8 @@
     'arm_neon%': '<(arm_neon)',
     'arm_neon_optional%': '<(arm_neon_optional)',
     'sysroot%': '<(sysroot)',
+    'nullfile%': '<(nullfile)',
+    'which%': '<(which)',
     'chroot_cmd%': '<(chroot_cmd)',
     'system_libdir%': '<(system_libdir)',
     'component%': '<(component)',
@@ -5655,8 +5668,8 @@
       # Set default ARM cross compiling on linux.  These can be overridden
       # using CC/CXX/etc environment variables.
       'make_global_settings': [
-        ['CC', '<!(which arm-linux-gnueabihf-gcc)'],
-        ['CXX', '<!(which arm-linux-gnueabihf-g++)'],
+        ['CC', '<!(<(which) arm-linux-gnueabihf-gcc 2><(nullfile) || true)'],
+        ['CXX', '<!(<(which) arm-linux-gnueabihf-g++ 2><(nullfile) || true)'],
         ['CC.host', '<(host_cc)'],
         ['CXX.host', '<(host_cxx)'],
       ],
