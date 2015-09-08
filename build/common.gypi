@@ -230,7 +230,7 @@
           }],
 
           # Set default gomadir.
-          ['OS=="win"', {
+          ['HOST_OS=="win"', {
             'gomadir': 'c:\\goma\\goma-win',
           }, {
             'gomadir': '<!(/bin/echo -n ${HOME}/goma)',
@@ -896,10 +896,17 @@
         ['OS=="linux" and target_arch=="arm" and chromeos==0', {
           # Set some defaults for arm/linux chrome builds
           'use_allocator%': 'none',
-          # sysroot needs to be an absolute path otherwise it generates
-          # incorrect results when passed to pkg-config
-          'sysroot%': '<!(cd <(DEPTH) && pwd -P)/arm-sysroot',
-        }], # OS=="linux" and target_arch=="arm" and chromeos==0
+          'conditions': [
+            ['HOST_OS=="win"', {
+              'sysroot%': '<(SYSROOT)'
+            }, {
+
+              # sysroot needs to be an absolute path otherwise it generates
+              # incorrect results when passed to pkg-config
+              'sysroot%': '<!(cd <(DEPTH) && pwd -P)/arm-sysroot',
+            }], # OS=="linux" and target_arch=="arm" and chromeos==0
+          ],
+        }],
 
         ['OS=="linux" and branding=="Chrome" and buildtype=="Official" and chromeos==0', {
           'conditions': [
@@ -2475,7 +2482,7 @@
         '-Wno-unused-local-typedef',
       ],
     },
-    'includes': [ 'set_clang_warning_flags.gypi', ],
+    'includes': [ '../chromium/build/set_clang_warning_flags.gypi', ],
     'defines': [
       # Don't use deprecated V8 APIs anywhere.
       'V8_DEPRECATION_WARNINGS',
@@ -3029,7 +3036,7 @@
       }, {
         'includes': [
            # Rules for excluding e.g. foo_win.cc from the build on non-Windows.
-          'filename_rules.gypi',
+          '../chromium/build/filename_rules.gypi',
         ],
         # In Chromium code, we define __STDC_foo_MACROS in order to get the
         # C99 macros on Mac and Linux.
@@ -3312,7 +3319,7 @@
         },
         'conditions': [
           ['msvs_use_common_release', {
-            'includes': ['release.gypi'],
+            'includes': ['../chromium/build/release.gypi'],
           }],
           ['release_valgrind_build==0 and tsan==0', {
             'defines': [
@@ -3961,7 +3968,7 @@
                 ],
                 'ldflags': [
                   '--sysroot=<(sysroot)',
-                  '<!(<(DEPTH)/build/linux/sysroot_ld_path.sh <(sysroot))',
+                  #'<!(<(DEPTH)/build/linux/sysroot_ld_path.sh <(sysroot))',
                 ],
               }]]
           }],
@@ -4273,7 +4280,7 @@
             # cwd is when running the compiler, so the normal gyp path-munging
             # fails us. This hack gets the right path.
             'ldflags': [
-              '-B<!(cd <(DEPTH) && pwd -P)/<(binutils_dir)',
+              #'-B<!(cd <(DEPTH) && pwd -P)/<(binutils_dir)',
             ],
           }],
           # Some binutils 2.23 releases may or may not have new dtags enabled,
