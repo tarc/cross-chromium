@@ -1,7 +1,12 @@
 {
-  'GYP_DEFINES': r"target_arch=arm component=shared_library linux_use_gold_flags=1 SYSROOT=/toolchain/arm/sdk clang_use_chrome_plugins=0 clang=0",
+  'GYP_DEFINES': r"target_arch=arm component=shared_library linux_use_gold_flags=1 SYSROOT=/toolchain/arm/sdk clang_use_chrome_plugins=0 clang=0 host_clang=0 arm_version=6 use_gtk3=0",
+	'GYP_GENERATOR_FLAGS': r"output_dir=../out",
   'GYP_CROSSCOMPILE': 'True',
   'CC': 'arm-linux-gnueabi-gcc',
   'CXX': 'arm-linux-gnueabi-g++',
-  'CHROMIUM_GYP_FILE': r"/Projetos/cross-chromium/src/build/all.gyp",
+  'AR': 'arm-linux-gnueabi-ar',
+  'LD': 'arm-linux-gnueabi-ld',
+  'NM': 'arm-linux-gnueabi-nm',
+  'READELF': 'arm-linux-gnueabi-readelf',
+  'CHROMIUM_GYP_FILE': r"src/build/all.gyp",
 }
