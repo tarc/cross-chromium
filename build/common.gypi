@@ -3497,7 +3497,7 @@
         ],
         'cflags_cc': [
           '-fno-exceptions',
-          '-fno-rtti',
+          #'-fno-rtti',
           '-fno-threadsafe-statics',
           # Make inline functions have hidden visiblity by default.
           # Surprisingly, not covered by -fvisibility=hidden.
@@ -3978,6 +3978,7 @@
               ['_toolset=="target"', {
                 'cflags': [
                   '--sysroot=<(sysroot)',
+                  '-mcpu=arm1136j-s',
                 ],
                 'ldflags': [
                   '--sysroot=<(sysroot)',
